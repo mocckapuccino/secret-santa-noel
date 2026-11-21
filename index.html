@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Christmas Secret Santa 🎄</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  --red: #8f1826;
+  --darkred: #4b0c17;
+  --gold: #e5bd68;
+  --lightgold: #f8e7b5;
+  --white: #fffaf0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 35px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Nunito', sans-serif;
+  color: var(--white);
+  background:
+    radial-gradient(ellipse at 15% 15%, #8d2630, transparent 42%),
+    radial-gradient(ellipse at 90% 85%, #6b1420, transparent 45%),
+    linear-gradient(145deg, #260810, #4c111b 55%, #23070e);
+}
+
+.snow {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.flake {
+  position: absolute;
+  color: #fff5df;
+  opacity: .55;
+  animation: snowfall 8s linear infinite;
+}
+
+@keyframes snowfall {
+  0% { transform: translateY(-30px) rotate(0); opacity: 0; }
+  15% { opacity: .7; }
+  85% { opacity: .6; }
+  100% { transform: translateY(105vh) rotate(180deg); opacity: 0; }
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  padding: 35px 25px;
+  border: 1px solid rgba(229,189,104,.55);
+  border-radius: 25px;
+  background: rgba(65,13,24,.91);
+  box-shadow: 0 20px 70px rgba(0,0,0,.4);
+  text-align: center;
+}
+
+.garland {
+  font-size: 22px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-shadow: 0 0 12px rgba(248,231,181,.5);
+  margin: 0 0 25px;
+  line-height: 1.8;
+}
+
+.tree {
+  font-size: 52px;
+  filter: drop-shadow(0 0 12px rgba(229,189,104,.5));
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 4px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(43px, 9vw, 68px);
+  color: var(--lightgold);
+  margin: 8px 0;
+  text-shadow: 0 0 22px rgba(229,189,104,.2);
+}
+
+.subtitle {
+  color: #f2dfd0;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 22px;
+}
+
+.divider {
+  color: var(--gold);
+  letter-spacing: 12px;
+  margin: 20px 0;
+}
+
+.panel {
+  background: rgba(255,250,240,.07);
+  border: 1px solid rgba(229,189,104,.3);
+  border-radius: 17px;
+  padding: 23px 20px;
+  margin-top: 20px;
+}
+
+.panel-title {
+  color: var(--lightgold);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 27px;
+  margin-bottom: 12px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  background: rgba(35,5,13,.65);
+  color: white;
+  border: 1px solid rgba(229,189,104,.5);
+  border-radius: 12px;
+  padding: 15px;
+  font: 15px/1.9 'Nunito', sans-serif;
+}
+
+textarea:focus {
+  outline: 2px solid var(--gold);
+}
+
+.main-button {
+  width: 100%;
+  border: 1px solid #f8e7b5;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 18px;
+  background: linear-gradient(110deg, #e5bd68, #f8e7b5);
+  color: #4b0c17;
+  font: 800 15px 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.main-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(229,189,104,.25);
+}
+
+.hint {
+  color: #e7cfc2;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 12px;
+}
+
+.hidden { display: none !important; }
+
+.link-card {
+  text-align: left;
+  background: rgba(255,250,240,.06);
+  border: 1px solid rgba(229,189,104,.3);
+  border-radius: 13px;
+  padding: 16px;
+  margin: 12px 0;
+}
+
+.link-name {
+  color: var(--lightgold);
+  font-weight: 800;
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.link-url {
+  display: block;
+  color: #f4dfb2;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.copy-button {
+  width: 100%;
+  margin-top: 12px;
+  border: 1px solid rgba(229,189,104,.5);
+  background: rgba(229,189,104,.12);
+  color: var(--lightgold);
+  padding: 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+}
+
+.receiver {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(40px, 9vw, 62px);
+  color: var(--lightgold);
+  margin: 15px 0;
+  overflow-wrap: anywhere;
+  text-shadow: 0 0 20px rgba(229,189,104,.3);
+}
+
+.secret {
+  color: #f2dfd0;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.footer {
+  margin-top: 28px;
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--gold);
+  font-size: 17px;
+  font-style: italic;
+}
+
+.error {
+  color: #ffe0d5;
+  background: rgba(150,30,40,.3);
+  border: 1px solid rgba(229,189,104,.3);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+@media(max-width:480px) {
+  .container { padding: 25px 17px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="snow" id="snow"></div>
+
+<main class="container">
+
+  <div class="garland">✦ 🎄 ✧ 🎄 ✦</div>
+
+  <div class="tree">🎄</div>
+  <div class="eyebrow">The most wonderful time of the year</div>
+
+  <h1>Secret Santa</h1>
+
+  <div class="subtitle">
+    Que la magie de Noël opère...<br>
+    Un cadeau, un sourire et beaucoup de bonheur. ✨
+  </div>
+
+  <div class="divider">✧ ❄ ✧</div>
+
+  <section id="setup">
+    <div class="panel">
+      <div class="panel-title">🎁 Les lutins participants</div>
+
+      <p class="hint">
+        Inscris les prénoms, un par ligne.
+      </p>
+
+      <textarea id="names">Cathy
+Fred
+Nathan
+Dylan
+Stecy
+Corinne
+Hervé
+Maxime
+Laura
+Marie
+Thomas</textarea>
+
+      <button class="main-button" onclick="generate()">
+        ✨ Lancer le tirage de Noël
+      </button>
+
+      <div class="hint">
+        ⭐ Chaque participant recevra son petit secret personnel.
+      </div>
+    </div>
+  </section>
+
+  <section id="links" class="hidden">
+    <div class="panel">
+      <div class="panel-title">💌 Les secrets du Père Noël</div>
+      <p class="hint">Copie et envoie chaque lien à la bonne personne.</p>
+      <div id="link-list"></div>
+    </div>
+  </section>
+
+  <section id="result" class="hidden">
+    <div class="panel">
+      <div class="panel-title">🎁 Ton cadeau de Noël</div>
+      <p id="giver-message" class="hint"></p>
+      <div class="receiver" id="receiver-name"></div>
+      <div class="divider">✧ ❄ ✧</div>
+      <p class="secret">
+        À toi de préparer une jolie surprise !<br>
+        Garde précieusement ce petit secret. 🤫<br>
+        Que la magie de Noël t'accompagne !
+      </p>
+    </div>
+  </section>
+
+  <div id="error" class="error hidden"></div>
+
+  <div class="garland">✦ ✧ 🎄 ✧ ✦</div>
+
+  <div class="footer">
+    Made with love and Christmas magic ♡
+  </div>
+
+</main>
+
+<script>
+
+// Neige décorative
+const snow = document.getElementById("snow");
+
+for (let i = 0; i < 35; i++) {
+  const flake = document.createElement("span");
+  flake.className = "flake";
+  flake.textContent = Math.random() > .5 ? "❄" : "✧";
+  flake.style.left = Math.random() * 100 + "%";
+  flake.style.top = Math.random() * 100 + "%";
+  flake.style.fontSize = (9 + Math.random() * 13) + "px";
+  flake.style.animationDelay = Math.random() * 8 + "s";
+  flake.style.animationDuration = (7 + Math.random() * 9) + "s";
+  snow.appendChild(flake);
+}
+
+function normalize(name) {
+  return name.trim().toLocaleLowerCase("fr");
+}
+
+// Exclusions réciproques
+const excludedPairs = [
+  ["Marie", "Thomas"],
+  ["Corinne", "Hervé"],
+  ["Cathy", "Fred"],
+  ["Dylan", "Stecy"]
+];
+
+function isForbidden(giver, receiver) {
+  const a = normalize(giver);
+  const b = normalize(receiver);
+
+  return excludedPairs.some(pair => {
+    const x = normalize(pair[0]);
+    const y = normalize(pair[1]);
+
+    return (a === x && b === y) ||
+           (a === y && b === x);
+  });
+}
+
+function shuffle(array) {
+  const result = [...array];
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
+}
+
+// Algorithme avec recherche et retour arrière
+function findAssignment(givers, receivers, assignment = {}) {
+
+  if (givers.length === 0) return assignment;
+
+  let selectedGiver = null;
+  let selectedOptions = null;
+
+  for (const giver of givers) {
+    const options = receivers.filter(receiver =>
+      normalize(giver) !== normalize(receiver) &&
+      !isForbidden(giver, receiver)
+    );
+
+    if (selectedOptions === null ||
+        options.length < selectedOptions.length) {
+      selectedGiver = giver;
+      selectedOptions = options;
+    }
+  }
+
+  if (!selectedOptions || selectedOptions.length === 0) {
+    return null;
+  }
+
+  const remainingGivers =
+    givers.filter(name => name !== selectedGiver);
+
+  for (const receiver of shuffle(selectedOptions)) {
+
+    const remainingReceivers =
+      receivers.filter(name => name !== receiver);
+
+    const result = findAssignment(
+      remainingGivers,
+      remainingReceivers,
+      {
+        ...assignment,
+        [selectedGiver]: receiver
+      }
+    );
+
+    if (result) return result;
+  }
+
+  return null;
+}
+
+function encode(data) {
+  return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+}
+
+function decode(data) {
+  return JSON.parse(decodeURIComponent(escape(atob(data))));
+}
+
+function showError(message) {
+  const error = document.getElementById("error");
+  error.textContent = message;
+  error.classList.remove("hidden");
+}
+
+function generate() {
+
+  document.getElementById("error").classList.add("hidden");
+
+  const names = document.getElementById("names").value
+    .split(/\r?\n/)
+    .map(n => n.trim())
+    .filter(Boolean);
+
+  if (names.length !== 11) {
+    showError("Il faut exactement 11 participants pour ce groupe.");
+    return;
+  }
+
+  if (new Set(names.map(normalize)).size !== names.length) {
+    showError("Attention, un prénom apparaît plusieurs fois.");
+    return;
+  }
+
+  const required = [
+    "Cathy", "Fred", "Nathan", "Dylan", "Stecy",
+    "Corinne", "Hervé", "Maxime", "Laura", "Marie", "Thomas"
+  ];
+
+  if (required.some(n =>
+    !names.some(name => normalize(name) === normalize(n))
+  )) {
+    showError("Vérifie la liste des 11 participants.");
+    return;
+  }
+
+  const assignment = findAssignment(names, [...names]);
+
+  if (!assignment) {
+    showError("Impossible de trouver un tirage valide.");
+    return;
+  }
+
+  const list = document.getElementById("link-list");
+  list.replaceChildren();
+
+  names.forEach(name => {
+
+    const url = new URL(window.location.href);
+    url.search = "";
+    url.hash = "";
+
+    url.searchParams.set("data", encode({
+      version: "christmas-group-2",
+      giver: name,
+      receiver: assignment[name]
+    }));
+
+    const card = document.createElement("div");
+    card.className = "link-card";
+
+    const title = document.createElement("div");
+    title.className = "link-name";
+    title.textContent = "🎄 " + name;
+
+    const anchor = document.createElement("a");
+    anchor.className = "link-url";
+    anchor.href = url.toString();
+    anchor.target = "_blank";
+    anchor.rel = "noopener";
+    anchor.textContent = "Ouvrir le lien personnel ↗";
+
+    const copy = document.createElement("button");
+    copy.className = "copy-button";
+    copy.textContent = "📋 Copier le lien";
+
+    copy.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(url.toString());
+        copy.textContent = "✨ Lien copié !";
+      } catch (e) {
+        prompt("Copie ce lien :", url.toString());
+      }
+    };
+
+    card.append(title, anchor, copy);
+    list.appendChild(card);
+  });
+
+  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("links").classList.remove("hidden");
+}
+
+function showResult() {
+
+  const data = new URLSearchParams(location.search).get("data");
+  if (!data) return;
+
+  try {
+    const info = decode(data);
+
+    if (
+      info.version !== "christmas-group-2" ||
+      !info.giver ||
+      !info.receiver
+    ) {
+      throw new Error("Lien invalide");
+    }
+
+    document.getElementById("setup").classList.add("hidden");
+
+    document.getElementById("giver-message").textContent =
+      "Bonjour " + info.giver + " ! Ton secret de Noël est :";
+
+    document.getElementById("receiver-name").textContent =
+      info.receiver;
+
+    document.getElementById("result").classList.remove("hidden");
+
+  } catch (e) {
+    document.getElementById("setup").classList.add("hidden");
+    showError("Ce lien n'est pas valide pour cette édition de Noël.");
+  }
+}
+
+showResult();
+
+</script>
+</body>
+</html>
